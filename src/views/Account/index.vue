@@ -37,10 +37,13 @@
                         <el-table-column align="center" prop="企业编码" label="企业编码" />
                         <el-table-column align="center" prop="创建时间" label="创建时间" />
                         <el-table-column align="center" prop="角色" label="角色" />
-                        <template #default="scope">
-                            <el-button link type="primary" size="small">编辑</el-button>
-                            <el-button link type="primary" size="small">删除</el-button>
-                        </template>
+                        <el-table-column align="center" fixed="right" label="操作" width="120">
+                            <template #default>
+                                <el-button link type="primary" size="small" @click="detailPage">详情</el-button>
+                                <el-button link type="primary" size="small">修改</el-button>
+                                <el-button link type="primary" size="small">删除</el-button>
+                            </template>
+</el-table-column>
 </el-table>
 <el-pagination style="margin-top: 20%;display: flex;justify-content: flex-end;" v-model:current-page="currentPage3" v-model:page-size="pageSize3" :small="small" :disabled="disabled" :background="background" layout="prev, pager, next, jumper" :total="1000"
     @size-change="handleSizeChange" @current-change="handleCurrentChange" />
@@ -61,9 +64,17 @@
         name: '',
         setup() {
             const form = reactive({
-                name: ''
-            })
-
+                    name: ''
+                })
+                // 表格假数据
+            const tableData = [{
+                用户名: "1",
+                所属企业: "",
+                企业编码: "",
+                创建时间: "已通过",
+                创建时间: "入门",
+                角色: ""
+            }];
             onBeforeMount(() => {
                 //   console.log('2.组件挂载页面之前执行----onBeforeMount')
             })
