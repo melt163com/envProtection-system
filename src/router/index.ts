@@ -17,16 +17,28 @@ const routes: Array<RouteRecordRaw> = [
     name: "index",
     component: () => import("../views/Home/index.vue"),
     children: [
-      //   {
-      //     // 这里不设置值，是把main作为默认页面
-      //     path: "",
-      //     redirect: "/entIndex",
-      //   },
+      {
+        // 这里不设置值，是把main作为默认页面
+        path: "",
+        redirect: "/entIndex",
+      },
       {
         // 企业管理-列表页
-        path: "entIndex",
+        path: "/entIndex",
         name: "entIndex",
         component: () => import("../views/Enterprise/index.vue"),
+      },
+      {
+        // 企业管理-新增企业信息
+        path: "/entAdd",
+        name: "entAdd",
+        component: () => import("../views/Enterprise/add.vue"),
+      },
+      {
+        // 企业管理-账号管理
+        path: "/accIndex",
+        name: "accIndex",
+        component: () => import("../views/Account/index.vue"),
       },
     ],
   },
