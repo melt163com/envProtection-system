@@ -20,7 +20,13 @@ const routes: Array<RouteRecordRaw> = [
       {
         // 这里不设置值，是把main作为默认页面
         path: "",
-        redirect: "/entIndex",
+        redirect: "/main",
+      },
+      {
+        // 首页
+        path: "/main",
+        name: "main",
+        component: () => import("../views/Main/index.vue"),
       },
       {
         // 企业管理-列表页
