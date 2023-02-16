@@ -22,16 +22,14 @@
                             <el-button size="small" class="empty-but" @click="clear">重置</el-button>
                         </el-col>
                     </el-row>
-                    <el-row>
-                        <el-col :span="8" style="margin-left: 20px;">
-                            <el-button size="small" class="add-but">新增</el-button>
-                            <el-button size="small" class="add-but">导出</el-button>
-                        </el-col>
-                    </el-row>
+                </div>
+                                <div class="add">
+                    <el-button size="small" :icon="Plus" style="margin-left:20px" class="add-but" @click='add'>新增</el-button>
+                    <el-button size="small" class="add-but">导出</el-button>
                 </div>
                 <div style="background: #fff;">
                     <!-- <el-table :row-class-name="tabName" :header-cell-style="{color:'#2A2A2A',background:'#D3ECFF'}" :data="tableData" style="width: 100%;"> -->
-                    <el-table ref="tableData" :data="tableData" highlight-current-row @current-change="handleCurrentChange" :row-class-name="tabName" :header-cell-style="{color:'#2A2A2A',background:'#D3ECFF'}">
+                    <el-table ref="tableData" :data="tableData" highlight-current-row @current-change="handleCurrentChange" :row-class-name="tabName" >
                         <el-table-column align="center" prop="用户名" label="用户名" />
                         <el-table-column align="center" prop="所属企业" label="所属企业" />
                         <el-table-column align="center" prop="企业编码" label="企业编码" />
@@ -60,20 +58,24 @@
         onBeforeMount,
         onMounted
     } from 'vue'
+    import { useRouter } from "vue-router";
     export default {
         name: '',
         setup() {
             const form = reactive({
                     name: ''
                 })
+          const router = useRouter()
                 // 表格假数据
+          const add = () => {
+            router.push('/accAdd')
+          }
             const tableData = [{
-                用户名: "1",
-                所属企业: "",
-                企业编码: "",
-                创建时间: "已通过",
-                创建时间: "入门",
-                角色: ""
+                用户名: "10221",
+                所属企业: "华晨宝马",
+                企业编码: "21312",
+                创建时间: "2022-10-12 12:23:34",
+                角色: "管理员"
             }];
             onBeforeMount(() => {
                 //   console.log('2.组件挂载页面之前执行----onBeforeMount')
@@ -83,31 +85,33 @@
             })
             return {
                 form,
+              tableData,
+              add
             }
         },
     }
 </script>
 <style scoped>
     /* 面包屑字体颜色更改 */
-    
+
     .breadcrumbColor>>>.el-breadcrumb__inner {
         color: #000;
     }
     /* 内部header */
-    
+
     .inside-header {
         height: 10px;
         display: flex;
         justify-content: left;
         align-items: center;
     }
-    
+
     .add-but {
         background: #DDE5FE;
         color: #1B6AC0;
     }
     /* 实心按钮背景样式 */
-    
+
     .sele-but {
         background: #3780b9;
         border: 0px;
@@ -115,9 +119,17 @@
         color: white;
     }
     /* 空心按钮样式 */
-    
+
     .empty-but {
         border: 1px solid #3780b9;
         color: #3780b9;
+    }
+    /* 新增按钮样式 */
+
+    .add {
+      height: 40px;
+      background: #fff;
+      display: flex;
+      align-items: center;
     }
 </style>

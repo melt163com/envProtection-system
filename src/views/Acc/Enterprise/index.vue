@@ -52,7 +52,7 @@
                 </div>
                 <div style="background: #fff;">
                     <!-- <el-table :row-class-name="tabName" :header-cell-style="{color:'#2A2A2A',background:'#D3ECFF'}" :data="tableData" style="width: 100%;"> -->
-                    <el-table ref="tableData" :data="tableData" highlight-current-row @current-change="handleCurrentChange" :row-class-name="tabName" :header-cell-style="{color:'#2A2A2A',background:'#D3ECFF'}">
+                    <el-table ref="tableData" :data="tableData" highlight-current-row @current-change="handleCurrentChange" :row-class-name="tabName" >
                         <el-table-column align="center" prop="企业名称" label="企业名称" />
                         <el-table-column align="center" prop="企业编号" label="企业编号" />
                         <el-table-column align="center" prop="省" label="省" />
@@ -149,18 +149,18 @@
         /* --el-table-tr-bg-color: var(--el-color-warning-light-9); */
         background: paleturquoise;
     }
-    
+
     .el-table .success-row {
         /* --el-table-tr-bg-color: var(--el-color-success-light-9); */
         background: palegreen;
     }
     /* 面包屑字体颜色更改 */
-    
+
     .breadcrumbColor>>>.el-breadcrumb__inner {
         color: #000;
     }
     /* 内部header */
-    
+
     .inside-header {
         height: 10px;
         display: flex;
@@ -168,21 +168,21 @@
         align-items: center;
     }
     /* 新增按钮样式 */
-    
+
     .add {
         height: 40px;
         background: #fff;
         display: flex;
         align-items: center;
     }
-    
+
     .add-but {
         margin-left: 20px;
         background: #dde5fe;
         color: #3780b9;
     }
     /* 实心按钮背景样式 */
-    
+
     .sele-but {
         background: #3780b9;
         border: 0px;
@@ -190,7 +190,7 @@
         color: white;
     }
     /* 空心按钮样式 */
-    
+
     .empty-but {
         border: 1px solid #3780b9;
         color: #3780b9;

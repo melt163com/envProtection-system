@@ -35,8 +35,27 @@
         width: 75%;
         align-items: center;
         display: flex;
-       
-      "></div>
+
+      ">            <div style="
+                float: left;
+                height: 100%;
+                width: 70%;
+                align-items: center;
+                display: flex;
+              ">
+                <el-tabs style="margin-left: 60px" v-model="activeName" @tab-click="handleClick">
+                    <el-tab-pane v-for="item in tabs" :label="item.count ? item.title + item.count : item.title" :name="item.value" :key="item.id">
+                        <div slot="label" class="my-label" :class="activeName === item.value ? 'tab-active' : ''">
+                            <!-- <span class="key">{{ item.title }}</span> -->
+                            <!-- <span class="value" v-if="item.count">{{
+                      item.count
+                    }}</span> -->
+                        </div>
+                        <!-- {{ item.id }} -->
+                    </el-tab-pane>
+                </el-tabs>
+            </div>
+</div>
         <div style="width: 20%; height: 100%;display: flex;justify-content: flex-end;" id="rightBox">
             <div class="avatar">
                 <div>
@@ -71,7 +90,8 @@
 
 <script>
     import {
-        reactive,
+      ref,
+      reactive,
         toRefs,
         onBeforeMount,
         onMounted
@@ -88,7 +108,24 @@
     export default {
         name: '',
         setup() {
-            console.log('1-开始创建组件-setup')
+          // 首次进入选中的名称
+          const activeName = ref("first");
+          // tabs循环数据
+          const tabs = [{
+            title: "首页",
+            value: "first",
+            // count: 3,
+            id: 1,
+          }, {
+            title: "企业管理",
+            value: "second",
+            // count: 4,
+            id: 2,
+          }, {
+            title: "环保局管理",
+            value: "third",
+            id: 3,
+          } ];
             const asideMenu = [{
                 id: '1',
                 title: "企业管理",
@@ -97,7 +134,19 @@
                 id: '2',
                 title: "账号管理",
                 index: "accIndex",
-            }, ]
+            },  {
+              id: '3',
+              title: "省级环保局管理",
+              index: "ProProIndex",
+            },  {
+              id: '4',
+              title: "市级环保局管理",
+              index: "cityIndex",
+            },  {
+              id: '5',
+              title: "区级环保局管理",
+              index: "areaIndex",
+            },  ]
             const data = reactive({})
             onBeforeMount(() => {
                 console.log('2.组件挂载页面之前执行----onBeforeMount')
@@ -107,7 +156,9 @@
             })
             return {
                 ...toRefs(data),
-                asideMenu
+                asideMenu,
+              tabs,
+              activeName
             }
         },
     }
@@ -117,8 +168,34 @@
         background: #f2f4f5;
         height: 100%;
     }
+    /*tabs*/
+
+    .tabs {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+    }
+
+    /* 标签样式更改 */
+    /* 去掉el-tab-pane底部灰色线条 */
+
+    :deep() .el-tabs__nav-wrap::after {
+      height: 0 !important;
+    }
+
+    :deep().el-tabs__item {
+      color: #888;
+    }
+
+    :deep().el-tabs__active-bar {
+      background-color: #3780b9;
+    }
+
+    :deep().el-tabs__item.is-active {
+      color: #000;
+    }
     /* 科擎环保门禁系统文字 */
-    
+
     #one {
         width: 100%;
         padding: 30px 0;
@@ -126,7 +203,7 @@
         text-align: center;
     }
     /* 菜单 */
-    
+
     .menu {
         background: #3780ba;
         display: flex;
@@ -135,7 +212,7 @@
         width: 20%;
         height: 500px;
     }
-    
+
     .avatar {
         width: 30%;
         clear: both;
@@ -144,30 +221,30 @@
         justify-content: center;
         align-items: center;
     }
-    
+
     .avatar>div {
         flex: 1;
         text-align: center;
     }
-    
+
     .avatar>div:not(:last-child) {
         border-right: 1px solid var(--el-border-color);
     }
-    
+
     .example-showcase .el-dropdown+.el-dropdown {
         margin-left: 15px;
     }
-    
+
     .el-aside {
         overflow-x: hidden;
         height: 100vh;
     }
-    
+
     .el-sub-menu .el-menu-item {
         padding-left: 60px !important;
     }
     /* 用户编号头像 */
-    
+
     .avatar {
         width: 30%;
         clear: both;
@@ -176,14 +253,14 @@
         justify-content: center;
         align-items: center;
     }
-    
+
     .Percode {
         width: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    
+
     .example-showcase .el-dropdown-link {
         cursor: pointer;
         color: var(--el-color-primary);
