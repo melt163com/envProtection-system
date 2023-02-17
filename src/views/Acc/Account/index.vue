@@ -25,7 +25,7 @@
                 </div>
                                 <div class="add">
                     <el-button size="small" :icon="Plus" style="margin-left:20px" class="add-but" @click='add'>新增</el-button>
-                    <el-button size="small" class="add-but">导出</el-button>
+                    <el-button size="small" class="add-but" @click="exportExcel">导出</el-button>
                 </div>
                 <div style="background: #fff;">
                     <!-- <el-table :row-class-name="tabName" :header-cell-style="{color:'#2A2A2A',background:'#D3ECFF'}" :data="tableData" style="width: 100%;"> -->
@@ -59,9 +59,14 @@
         onMounted
     } from 'vue'
     import { useRouter } from "vue-router";
+    import * as XLSX from 'xlsx'
     export default {
         name: '',
         setup() {
+          let table = reactive({
+            rows: [],
+            total: 0
+          });
             const form = reactive({
                     name: ''
                 })
@@ -77,6 +82,12 @@
                 创建时间: "2022-10-12 12:23:34",
                 角色: "管理员"
             }];
+          const exportExcel = ()=>{
+            const data = XLSX.utils.json_to_sheet(tableData)//此处tableData.value为表格的数据
+            const wb = XLSX.utils.book_new()
+            XLSX.utils.book_append_sheet(wb,data,'test-data')//test-data为自定义的sheet表名
+            XLSX.writeFile(wb,'账号管理.xlsx')//test.xlsx为自定义的文件名
+          }
             onBeforeMount(() => {
                 //   console.log('2.组件挂载页面之前执行----onBeforeMount')
             })
@@ -86,7 +97,9 @@
             return {
                 form,
               tableData,
-              add
+              add,
+              exportExcel,
+              table
             }
         },
     }

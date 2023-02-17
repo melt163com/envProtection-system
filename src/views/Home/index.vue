@@ -1,270 +1,446 @@
 <template>
-    <div class="box">
-        <el-container>
-            <el-aside width="19vw" style="background: #3780ba">
-                <div id="one">
-                    <h4>科擎环保门禁系统</h4>
-                </div>
-                <el-menu active-text-color="#fff" background-color="#3780B9" class="el-menu-vertical-demo" default-active="2" text-color="#fff" :router="true">
-                    <template v-for="item in asideMenu">
-                        <!-- 一级菜单 -->
-                        <el-menu-item :index="item.index">
-                            <el-icon>
-                                <document />
-                                <img v-if="item.id == 1" style="
-                                  height: 1rem;
-                                  padding-right: 0.3rem;
-                                  vertical-align: middle;
-                                " :src="qygl" alt="" />
-                                <img v-else style="
-                                  height: 1rem;
-                                  padding-right: 0.3rem;
-                                  vertical-align: middle;
-                                " :src="zhgl" alt="" />
-                            </el-icon>
-                            <span>{{ item.title }}</span>
-                        </el-menu-item>
-                    </template>
-</el-menu>
-</el-aside>
-<el-container>
-    <el-header style=" background: #fff;">
-        <div style="
-        float: left;
-        height: 100%;
-        width: 75%;
-        align-items: center;
-        display: flex;
-
-      ">            <div style="
+  <div class="box">
+    <el-container>
+      <el-aside width="19vw" style="background: #3780ba">
+        <div id="one">
+          <h4>科擎环保门禁系统</h4>
+        </div>
+        <el-menu
+          active-text-color="#fff"
+          background-color="#3780B9"
+          class="el-menu-vertical-demo"
+          default-active="2"
+          text-color="#fff"
+          :router="true"
+        >
+          <template v-for="item in infoRef.test">
+            <!-- 一级菜单 -->
+            <el-menu-item :index="item.index">
+              <el-icon>
+                <document />
+                <img
+                  v-if="item.id == 1"
+                  style="
+                    height: 1rem;
+                    padding-right: 0.3rem;
+                    vertical-align: middle;
+                  "
+                  :src="qygl"
+                  alt=""
+                />
+                <img
+                  v-else
+                  style="
+                    height: 1rem;
+                    padding-right: 0.3rem;
+                    vertical-align: middle;
+                  "
+                  :src="zhgl"
+                  alt=""
+                />
+              </el-icon>
+              <span>{{ item.title }}</span>
+            </el-menu-item>
+          </template>
+        </el-menu>
+      </el-aside>
+      <el-container>
+        <el-header style="background: #fff">
+          <div
+            style="
+              float: left;
+              height: 100%;
+              width: 75%;
+              align-items: center;
+              display: flex;
+            "
+          >
+            <div
+              style="
                 float: left;
                 height: 100%;
                 width: 70%;
                 align-items: center;
                 display: flex;
-              ">
-                <el-tabs style="margin-left: 60px" v-model="activeName" @tab-click="handleClick">
-                    <el-tab-pane v-for="item in tabs" :label="item.count ? item.title + item.count : item.title" :name="item.value" :key="item.id">
-                        <div slot="label" class="my-label" :class="activeName === item.value ? 'tab-active' : ''">
-                            <!-- <span class="key">{{ item.title }}</span> -->
-                            <!-- <span class="value" v-if="item.count">{{
+              "
+            >
+              <el-tabs
+                style="margin-left: 60px"
+                v-model="activeName"
+                @tab-click="handleClick"
+              >
+                <el-tab-pane
+                  v-for="item in tabs"
+                  :label="item.count ? item.title + item.count : item.title"
+                  :name="item.value"
+                  :key="item.id"
+                >
+                  <div
+                    slot="label"
+                    class="my-label"
+                    :class="activeName === item.value ? 'tab-active' : ''"
+                  >
+                    <!-- <span class="key">{{ item.title }}</span> -->
+                    <!-- <span class="value" v-if="item.count">{{
                       item.count
                     }}</span> -->
-                        </div>
-                        <!-- {{ item.id }} -->
-                    </el-tab-pane>
-                </el-tabs>
+                  </div>
+                  <!-- {{ item.id }} -->
+                </el-tab-pane>
+              </el-tabs>
             </div>
-</div>
-        <div style="width: 20%; height: 100%;display: flex;justify-content: flex-end;" id="rightBox">
+          </div>
+          <div
+            style="
+              width: 20%;
+              height: 100%;
+              display: flex;
+              justify-content: flex-end;
+            "
+            id="rightBox"
+          >
             <div class="avatar">
-                <div>
-                    <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
-                </div>
+              <div>
+                <el-avatar
+                  src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                />
+              </div>
             </div>
             <div class="Percode">
-                <el-dropdown :hide-on-click="false">
-                    <span class="el-dropdown-link">
-                                    员工编号<el-icon class="el-icon--right">
-                                        <arrow-down />
-                                    </el-icon>
-                                </span>
-                    <template #dropdown>
-                                    <el-dropdown-menu>
-                                        <el-dropdown-item @click="exitLogin()">退出登录</el-dropdown-item>
-                                        <!-- <el-dropdown-item>Action 2</el-dropdown-item> -->
-                                    </el-dropdown-menu>
-                                </template>
-                </el-dropdown>
+              <el-dropdown :hide-on-click="false">
+                <span class="el-dropdown-link">
+                  员工编号<el-icon class="el-icon--right">
+                    <arrow-down />
+                  </el-icon>
+                </span>
+                <template #dropdown>
+                  <el-dropdown-menu>
+                    <el-dropdown-item @click="updatePwd"
+                      >修改密码</el-dropdown-item
+                    >
+                    <el-dropdown-item @click="exitLogin()"
+                      >退出登录</el-dropdown-item
+                    >
+                    <!-- <el-dropdown-item>Action 2</el-dropdown-item> -->
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
             </div>
-        </div>
-    </el-header>
-    <!-- 主体模块：标签页 + 当前路由内容 -->
-    <el-main class="el-main" style="width: 100%">
-        <router-view style="height: 100vh" />
-    </el-main>
-</el-container>
-</el-container>
-</div>
+          </div>
+        </el-header>
+        <!--    修改密码弹窗-->
+        <el-dialog
+          v-model="updatePwdDialog"
+          title="修改密码"
+          width="50%"
+          center
+        >
+          <div style="width: 90%">
+            <el-form
+              ref="ruleFormRef"
+              :model="ruleForm"
+              status-icon
+              :rules="rules"
+              label-width="120px"
+              class="demo-ruleForm"
+            >
+              <el-form-item label="旧密码" prop="password">
+                <div>
+                  <el-input
+                    v-model="ruleForm.password"
+                    placeholder="请输入旧密码"
+                    autocomplete="off"
+                  />
+                </div>
+                <div style="margin-left: 10px"></div>
+              </el-form-item>
+              <el-form-item label="新密码" prop="password">
+                <div>
+                  <el-input
+                    v-model="ruleForm.password"
+                    placeholder="请输入新密码"
+                    autocomplete="off"
+                  />
+                </div>
+                <div style="margin-left: 10px"></div>
+              </el-form-item>
+              <el-form-item label="确认密码" prop="password">
+                <div>
+                  <el-input
+                    v-model="ruleForm.password"
+                    placeholder="请确认您的密码"
+                    autocomplete="off"
+                  />
+                </div>
+                <div style="margin-left: 10px"></div>
+              </el-form-item>
+              <span style="font-size: 2px; color: #c0403f; margin-left: 120px"
+                >要求包含:英文大小写+数字,不少于6位</span
+              >
+            </el-form>
+          </div>
+          <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="updatePwdDialog = false">取消</el-button>
+              <el-button type="primary" @click="updatePwdDialog = false">
+                确认
+              </el-button>
+            </span>
+          </template>
+        </el-dialog>
+        <!-- 主体模块：标签页 + 当前路由内容 -->
+        <el-main class="el-main" style="width: 100%">
+          <router-view style="height: 100vh" />
+        </el-main>
+      </el-container>
+    </el-container>
+  </div>
 </template>
 
 <script>
-    import {
-      ref,
-      reactive,
-        toRefs,
-        onBeforeMount,
-        onMounted
-    } from 'vue'
-    import {
-        Plus,
-        ArrowDown
-    } from "@element-plus/icons-vue";
-    import qygl from "@/assets/qygl.png";
-    import zhgl from "@/assets/zhgl.png";
-    import {
-        useRouter
-    } from "vue-router";
-    export default {
-        name: '',
-        setup() {
-          // 首次进入选中的名称
-          const activeName = ref("first");
-          // tabs循环数据
-          const tabs = [{
-            title: "首页",
-            value: "first",
-            // count: 3,
-            id: 1,
-          }, {
+import { ref, reactive, nextTick, onMounted } from "vue";
+import { ElMessageBox, TabsPaneContext } from "element-plus";
+import { ArrowDown, Plus } from "@element-plus/icons-vue";
+import { useRouter } from "vue-router";
+
+export default {
+  setup() {
+    const router = useRouter();
+    // 修改密码
+    const updatePwd = () => {
+      ElMessageBox.confirm("真的要修改密码吗?", "提示", {
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          updatePwdDialog.value = true;
+        })
+        .catch(() => {
+          //取消：就不做任何提示了
+        });
+    };
+    const updatePwdDialog = ref(false);
+    const ruleForm = reactive({
+      password: "",
+    });
+    //退出登陆
+    const exitLogin = () => {
+      ElMessageBox.confirm("真的要退出登陆吗?", "提示", {
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          // localStorage.removeItem("isLogin");
+          router.push("/login");
+        })
+        .catch(() => {
+          //取消：就不做任何提示了
+        });
+    };
+    // tabs循环数据
+    const tabs = [
+      {
+        title: "首页",
+        value: "first",
+        id: 1,
+      },
+      {
+        title: "企业管理",
+        value: "second",
+        id: 2,
+      },
+      {
+        title: "环保局管理",
+        value: "third",
+        id: 3,
+      },
+    ];
+    // 侧边菜单打开关闭
+    const handleOpen = (key, keyPath) => {
+      console.log(key, keyPath);
+    };
+    const handleClose = (key, keyPath) => {
+      console.log(key, keyPath);
+    };
+    // 首次进入选中的名称
+    const activeName = ref("second");
+    const infoRef = ref(source());
+    let info = infoRef.value; // Js里操作只操作 info 就可以不用 infoRef.value 了
+    function reset() {
+      // 这样需要重置整个响应式对象就不需要 Object.assign和考虑深拷贝问题了
+      infoRef.value = source();
+      // 重新初始化整个响应式对象时，用来数据操作的实际变量也需要重新赋值！
+      info = infoRef.value;
+    }
+
+    function source() {
+      return {
+        test: [
+          {
+            id: "1",
+            sign: "second",
             title: "企业管理",
-            value: "second",
-            // count: 4,
-            id: 2,
-          }, {
-            title: "环保局管理",
-            value: "third",
-            id: 3,
-          } ];
-            const asideMenu = [{
-                id: '1',
-                title: "企业管理",
-                index: "entIndex",
-            }, {
-                id: '2',
-                title: "账号管理",
-                index: "accIndex",
-            },  {
-              id: '3',
-              title: "省级环保局管理",
-              index: "ProProIndex",
-            },  {
-              id: '4',
-              title: "市级环保局管理",
-              index: "cityIndex",
-            },  {
-              id: '5',
-              title: "区级环保局管理",
-              index: "areaIndex",
-            },  ]
-            const data = reactive({})
-            onBeforeMount(() => {
-                console.log('2.组件挂载页面之前执行----onBeforeMount')
-            })
-            onMounted(() => {
-                console.log('3.-组件挂载到页面之后执行-------onMounted')
-            })
-            return {
-                ...toRefs(data),
-                asideMenu,
-              tabs,
-              activeName
-            }
-        },
+            index: "entIndex",
+          },
+          {
+            id: "2",
+            sign: "second",
+            title: "账号管理",
+            index: "accIndex",
+          },
+          {
+            id: "3",
+            sign: "third",
+            title: "省级环保局管理",
+            index: "ProProIndex",
+          },
+          {
+            id: "4",
+            sign: "third",
+            title: "市级环保局管理",
+            index: "cityIndex",
+          },
+          {
+            id: "5",
+            sign: "third",
+            title: "区级环保局管理",
+            index: "areaIndex",
+          },
+        ],
+      };
     }
+    let all_left_menu = source();
+    return {
+      tabs,
+      infoRef,
+      all_left_menu,
+      exitLogin,
+      updatePwd,
+      updatePwdDialog,
+      ruleForm,
+    };
+  },
+  mounted() {
+    this.infoRef = [];
+  },
+  methods: {
+    log() {
+      this.infoRef = [];
+    },
+    handleClick(tab, event) {
+      let cur_menu = this.all_left_menu.test.filter(
+        (e) => tab.props.name == e.sign
+      );
+      this.infoRef.test = cur_menu;
+    },
+  },
+};
 </script>
+
 <style scoped>
-    .box {
-        background: #f2f4f5;
-        height: 100%;
-    }
-    /*tabs*/
+.box {
+  background: #f2f4f5;
+  height: 100%;
+}
+/*tabs*/
 
-    .tabs {
-      width: 100%;
-      height: 100%;
-      background: #fff;
-    }
+.tabs {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
 
-    /* 标签样式更改 */
-    /* 去掉el-tab-pane底部灰色线条 */
+/* 标签样式更改 */
+/* 去掉el-tab-pane底部灰色线条 */
 
-    :deep() .el-tabs__nav-wrap::after {
-      height: 0 !important;
-    }
+:deep() .el-tabs__nav-wrap::after {
+  height: 0 !important;
+}
 
-    :deep().el-tabs__item {
-      color: #888;
-    }
+:deep().el-tabs__item {
+  color: #888;
+}
 
-    :deep().el-tabs__active-bar {
-      background-color: #3780b9;
-    }
+:deep().el-tabs__active-bar {
+  background-color: #3780b9;
+}
 
-    :deep().el-tabs__item.is-active {
-      color: #000;
-    }
-    /* 科擎环保门禁系统文字 */
+:deep().el-tabs__item.is-active {
+  color: #000;
+}
+/* 科擎环保门禁系统文字 */
 
-    #one {
-        width: 100%;
-        padding: 30px 0;
-        color: #fff;
-        text-align: center;
-    }
-    /* 菜单 */
+#one {
+  width: 100%;
+  padding: 30px 0;
+  color: #fff;
+  text-align: center;
+}
+/* 菜单 */
 
-    .menu {
-        background: #3780ba;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 20%;
-        height: 500px;
-    }
+.menu {
+  background: #3780ba;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  height: 500px;
+}
 
-    .avatar {
-        width: 30%;
-        clear: both;
-        float: left;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+.avatar {
+  width: 30%;
+  clear: both;
+  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .avatar>div {
-        flex: 1;
-        text-align: center;
-    }
+.avatar > div {
+  flex: 1;
+  text-align: center;
+}
 
-    .avatar>div:not(:last-child) {
-        border-right: 1px solid var(--el-border-color);
-    }
+.avatar > div:not(:last-child) {
+  border-right: 1px solid var(--el-border-color);
+}
 
-    .example-showcase .el-dropdown+.el-dropdown {
-        margin-left: 15px;
-    }
+.example-showcase .el-dropdown + .el-dropdown {
+  margin-left: 15px;
+}
 
-    .el-aside {
-        overflow-x: hidden;
-        height: 100vh;
-    }
+.el-aside {
+  overflow-x: hidden;
+  height: 100vh;
+}
 
-    .el-sub-menu .el-menu-item {
-        padding-left: 60px !important;
-    }
-    /* 用户编号头像 */
+.el-sub-menu .el-menu-item {
+  padding-left: 60px !important;
+}
+/* 用户编号头像 */
 
-    .avatar {
-        width: 30%;
-        clear: both;
-        float: left;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+.avatar {
+  width: 30%;
+  clear: both;
+  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .Percode {
-        width: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+.Percode {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .example-showcase .el-dropdown-link {
-        cursor: pointer;
-        color: var(--el-color-primary);
-        display: flex;
-        align-items: center;
-    }
+.example-showcase .el-dropdown-link {
+  cursor: pointer;
+  color: var(--el-color-primary);
+  display: flex;
+  align-items: center;
+}
 </style>
